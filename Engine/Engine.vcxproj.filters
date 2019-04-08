@@ -21,6 +21,9 @@
     <ClCompile Include="ShaderSRC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="loaderMSH.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="shaderSource.h">
@@ -29,5 +32,13 @@
     <ClInclude Include="stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="loaderMSH.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="triangulo.msh">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

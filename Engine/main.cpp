@@ -26,16 +26,6 @@ float triangle[12] = {
 	0.0,0.0,0.0,0.0
 };
 
-typedef struct polygon
-{
-	float* triangles;
-	int* vertexIndex;
-	int triangleCount;
-	GLuint bufferVertexID; //vertex buffer
-	GLuint bufferIndexID; //index buffer
-	GLuint vertexArrayID; //vertex array (object)
-}polygon;
-
 typedef struct camera_t
 {
 	glm::vec3 position;//position
