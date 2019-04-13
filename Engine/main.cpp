@@ -11,6 +11,7 @@ nuestro ejecutable será mas grande pero no importa*/
 #include "shaderSource.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+#include "loaderMSH.h"
 
 float pos[4] = { 0.0,0.0,0.0,1.0};
 float rotAngle = 0;
@@ -332,12 +333,14 @@ int main(int argc, char** argv)
 	double lastX, lastY;
 	lastX = lastY = 0;
 
-	polygon* pol = createPolygon();
+	//polygon* pol = createPolygon(); //Antes de implementar carga de xml. Una vez implementada:
+	polygon* pol = loadMSH("triangulo.msh");
 	GLint programID = compileAndLinkShaderProgram(vertexShaderSRC, fragmentShaderSRC);
 	uploadPolygonGPU(pol,programID);
 
 	
-	GLuint texID = cargaTextura("data/top.png");
+	//GLuint texID = cargaTextura("data/top.png");
+	GLuint texID = cargaTextura(pol->textureName);
 
 	//mientras no cerrada {}. Tenemos que hacer glfwSwapBuffers(win1) al final para que se pinte en pantalla
 	while (!(glfwWindowShouldClose(win1)))
