@@ -74,6 +74,8 @@ polygon* loadMSH(const char* fileName)
 		
 		std::unique_ptr<std::vector<std::string>> indices = splitString(bufferNode.child("indices").text().as_string(),',');
 		//std::vector<std::string>* indices = splitString(bufferNode.child("indices").text().as_string(), ',');
+		pol->vertexIndex = new int[indices->size()];
+		pol->vertexIndexCount = indices->size();
 
 		pol->vertexIndex = new int[indices->size()];
 		int vecLength = indices->size();
@@ -83,21 +85,36 @@ polygon* loadMSH(const char* fileName)
 		}
 
 		std::unique_ptr<std::vector<std::string>> coords = splitString(bufferNode.child("coords").text().as_string(), ',');
-		std::unique_ptr<std::vector<std::string>> textCoords =splitString(bufferNode.child("textCoords").text().as_string(), ',');
+		std::unique_ptr<std::vector<std::string>> textCoords = splitString(bufferNode.child("textCoords").text().as_string(), ',');
 		/*std::vector<std::string>* coords = splitString(bufferNode.child("coords").text().as_string(), ',');
 		std::vector<std::string>* texCoords = splitString(bufferNode.child("texCoords").text().as_string(), ',');*/
+		std::unique_ptr<std::vector<std::string>> normals = splitString(bufferNode.child("normals").text().as_string(), ',');
 
-		pol->triangles = new float[coords->size()+ textCoords->size()];
-		int vertexCount = coords->size() / 4;//cada coordenada ocupa 4 floats. Dividiendo entre 4 sabemos el num de vértices
+
+		pol->vertices = new vertex_t[coords->size() + textCoords->size()];
+		pol->vertexCompCount = bufferNode.child("coords").attribute("vertexCompCount").as_int();
+		pol->vertexCompCount = bufferNode.child("texCoords").attribute("texCoordCompCount").as_int();
+		pol->normalsCompCount = bufferNode.child("normals").attribute("normalCompCount").as_int();
+
+
+		int vertexCount = coords->size() / pol->vertexCompCount;//cada coordenada ocupa 4 floats. Dividiendo entre 4 sabemos el num de vértices
 		for (int i = 0; i < vertexCount; i++)
 		{
 			//Cargamos coordenadas en array de coordenadas
-			for (int j=0;j<4;j++)
-				pol->triangles[i*6+j] = numberFromString<float>(coords->at(i*4 +j));
+			for (int j=0;j<pol->vertexCompCount;j++)
+				pol->vertices[i].pos[j] = numberFromString<float>(coords->at(i*pol->vertexCompCount+j));
 			//Cargamos coordenadas de textura
-			for (int j=0;j<2;j++)
-				pol->triangles[i*6 + 4 + j] = numberFromString<float>(textCoords->at(i * 2 + j));
+			for (int j=0;j<pol->texCoordCompCount;j++)
+				pol->vertices[i].texCoord[j] = numberFromString<float>(textCoords->at(i*pol->texCoordCompCount+j));
+			for (int j = 0; j < pol->normalsCompCount; j++)
+				pol->vertices[i].normal[j] = numberFromString<float>(normals->at(i*pol->normalsCompCount+j));
 		}
+		pol->stride = pol->vertexCompCount + pol->texCoordCompCount + pol->normalsCompCount;
+		pol->normalCount = normals->size() / pol->normalsCompCount;
+		pol->texCoordCount = textCoords->size() / pol->texCoordCompCount;
+		pol->vertexCount = vertexCount;
+		pol->triangleCount = pol->vertexCount / pol->vertexCompCount;
+
 		//Aqui irian los deletes si hubieramos usado raw pointers e lugar de smart pointers.
 		/*delete indices;
 		delete coords;

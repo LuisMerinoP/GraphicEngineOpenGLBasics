@@ -40,5 +40,8 @@
     <None Include="triangulo.msh">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="data\cubo.msh">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

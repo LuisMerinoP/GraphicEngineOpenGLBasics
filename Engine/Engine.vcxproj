@@ -132,7 +132,12 @@
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="triangulo.msh" />
+    <None Include="data\cubo.msh">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="triangulo.msh">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,7 +1,7 @@
 <mesh>
 	<buffers>
 		<buffer>
-			<material>data/top.png</material>
+			<material>data/front.png</material>
 			<indices>0,1,2</indices>,
 			<coords>0.0,0.5,0.0,1.0,-0.5,0.0,0.0,1.0,0.5,0.0,0.0,1.0</coords>
 			<textCoords>0.5,0.99,0.0,0.0,1.0,0.0</textCoords>

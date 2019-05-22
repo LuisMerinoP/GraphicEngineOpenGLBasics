@@ -20,18 +20,22 @@
 //"";
 const GLchar* vertexShaderSRC = ""\
 "uniform mat4 MVP;"\
-"attribute vec4 vpos;"\
+"attribute vec3 vpos;"\
 "attribute vec2 vtex;"\
+"attribute vec3 vnormal;"\
 "varying vec2 ftex;"\
+"varying vec3 fnormal;"\
 "void main()"\
-"{	gl_Position = MVP * vpos;"\
+"{	gl_Position = MVP * vec4(vpos,1);"\
 "	ftex=vtex;"\
+"	fnormal=vnormal;"\
 " }"\
 ""\
 "";
 const GLchar* fragmentShaderSRC = ""\
 "uniform sampler2D sampler;"\
 "varying vec2 ftex;"\
+"varying vec3 fnormal;"\
 "void main() "\
 "{ gl_FragColor = texture2D(sampler,ftex); }" \
 "";

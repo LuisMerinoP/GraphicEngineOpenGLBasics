@@ -14,6 +14,7 @@ nuestro ejecutable será mas grande pero no importa*/
 #include "loaderMSH.h"
 
 float pos[4] = { 0.0,0.0,0.0,1.0};
+//float pos1[4] = { 3.0,0.0,0.0,1.0 };
 float rotAngle = 0;
 
 float triangleInit[18] = {
@@ -34,27 +35,27 @@ typedef struct camera_t
 	glm::vec3 up;//our up direction.
 }camera_t;
 
-polygon* createPolygon()
-{
-	//reservamos la estructura
-	polygon* pol = new polygon;
-	pol->triangleCount = 1;
-	pol->triangles = new float[18];//3 floats por vértice x 3 vertices = 9 floats
-	pol->vertexIndex = new int[3];//3 vertices, 3 posiciones.
-
-	//copiar triangle del main al polígono
-	for (int i = 0; i < 18; i++)
-	{
-		pol->triangles[i] = triangleInit[i];
-	}
-
-	//inicializo vértices
-	for (int i = 0; i < 3; i++)
-	{
-		pol->vertexIndex[i] = i;
-	}
-	return pol;
-}
+//polygon* createPolygon()
+//{
+//	//reservamos la estructura
+//	polygon* pol = new polygon;
+//	pol->triangleCount = 1;
+//	pol->triangles = new float[18];//3 floats por vértice x 3 vertices = 9 floats
+//	pol->vertexIndex = new int[3];//3 vertices, 3 posiciones.
+//
+//	//copiar triangle del main al polígono
+//	for (int i = 0; i < 18; i++)
+//	{
+//		pol->triangles[i] = triangleInit[i];
+//	}
+//
+//	//inicializo vértices
+//	for (int i = 0; i < 3; i++)
+//	{
+//		pol->vertexIndex[i] = i;
+//	}
+//	return pol;
+//}
 
 void uploadPolygonGPU(polygon* pol, GLuint programID)
 {
@@ -62,6 +63,7 @@ void uploadPolygonGPU(polygon* pol, GLuint programID)
 	//posición de variables vpos y vtex
 	GLuint vpos = glGetAttribLocation(programID, "vpos");
 	GLuint vtex = glGetAttribLocation(programID, "vtex");
+	GLuint vnormal = glGetAttribLocation(programID, "vnormal");
 
 	glGenVertexArrays(1, &(pol->vertexArrayID));
 	glGenBuffers(1, &(pol->bufferVertexID));
@@ -72,20 +74,24 @@ void uploadPolygonGPU(polygon* pol, GLuint programID)
 	//primero subo vértices
 	glBindBuffer(GL_ARRAY_BUFFER, pol->bufferVertexID); //vincular vertexID
 	//modificar buffer de memoria cargando datos. Los datos son las coordenadas de los vértices del pol (pol->triangles)
-	glBufferData(GL_ARRAY_BUFFER,sizeof(float)*18,pol->triangles, GL_STATIC_DRAW);
+	//glBufferData(GL_ARRAY_BUFFER,sizeof(float)*18,pol->triangles, GL_STATIC_DRAW); 
+	//Cambiamos la línea anterior para que los datos estén en función de los datos de nuestro pol
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * pol->stride*pol->vertexCount, pol->vertices, GL_STATIC_DRAW);
 
 	//segundo subo índices
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pol->bufferIndexID); //vincular bufferID
 	//modificar buffer de memoria cargando datos. Los datos son las coordenadas de los vértices del pol (pol->triangles)
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * 3,pol->vertexIndex, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * pol->vertexIndexCount,pol->vertexIndex, GL_STATIC_DRAW);//subir array de índices
 
 	/*Hay que decirle a opengl en que formato estan los datos. 
 	Para que opengl entienda el formato en que subimos los datos a GPU hay que indicarselo aqui
 	con esta función.*/
-	glVertexAttribPointer(vpos,4,GL_FLOAT,GL_FALSE,6*sizeof(float),nullptr);
+	glVertexAttribPointer(vpos,pol->vertexCompCount,GL_FLOAT,GL_FALSE,pol->stride*sizeof(float),nullptr);
 	glEnableVertexAttribArray(vpos);
 
-	glVertexAttribPointer(vtex,2,GL_FLOAT,GL_FALSE,6*sizeof(float),(void*)(4*sizeof(float)));
+	glVertexAttribPointer(vtex,pol->texCoordCompCount,GL_FLOAT,GL_FALSE, pol->stride*sizeof(float),(void*)(pol->vertexCompCount*sizeof(float)));
+	
+	glVertexAttribPointer(vnormal, pol->normalsCompCount, GL_FLOAT, GL_FALSE, pol->stride * sizeof(float), (void*)((pol->vertexCompCount + pol->vertexCompCount) * sizeof(float)));
 	//activar
 	glEnableVertexAttribArray(vtex);
 }
@@ -158,13 +164,14 @@ void Move(float move_x, float move_y, float move_z)
 
 GLuint cargaTextura(const char* tex)
 {
-	GLuint texID = -1;//para que si sale esto de error
+	GLuint texID = -1;//para que si sale esto de error4
+	glGenTextures(1, &texID);
 	int x, y;
 	x = y = 0;
 	//llamada a stbi_load
 	unsigned char* texBytes = stbi_load(tex, &x, &y, nullptr, 4);//cargados los bytes de la imagen
 	//generar la textura en si
-	glGenTextures(1, &texID);
+	
 	//bindear (hacerla activa)
 	/*Esta línea es crítica si queremos hacer mas cosas. En nuestro código 
 	no utilizaremos muchas texturas y nos valdrá con un texID y un bindeo.
@@ -223,10 +230,46 @@ void DrawTriangle(polygon* pol, GLuint programID, camera_t cam, GLuint texID)
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texID);//Para solo una textura no haría falta esta línea. Para mas, sí. Hay que bindear cada vez.
 	glUniform1i(texSamplerID,0);
-	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+	//glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);//introducimos variables del pol
+	glDrawElements(GL_TRIANGLES, pol->vertexIndexCount, GL_UNSIGNED_INT, nullptr);
 
 }
-
+//void DrawTriangle2(polygon* pol, GLuint programID, camera_t cam, GLuint texID)
+//{
+//	glClear(GL_COLOR_BUFFER_BIT); //memory buffer reset
+//
+//	//Para dibujar desde GPU:
+//	glBindBuffer(GL_ARRAY_BUFFER, 0);
+//	/*no debería ser necesario por que no hemos seleccionado ningún otro objeto pero añadimos por si acaso.
+//	En caso de tener varios elementos habría que vincular el correspondiente al que queremos dibujar!*/
+//	glBindVertexArray(pol->vertexArrayID);
+//
+//	glUseProgram(programID);
+//
+//	glm::mat4 trans = glm::translate(glm::mat4(1.0), glm::vec3(pos1[0], pos[1], pos[2]));
+//	glm::mat4  rot = glm::rotate(glm::mat4(1.0), rotAngle, glm::vec3(0, 1, 0));
+//	trans = trans * rot;
+//	//z positiva hacia atras. Para retrasar z ponemos 2.
+//	glm::mat4 visor = glm::lookAt(cam.position, cam.lookAt, cam.up);
+//
+//	glm::mat4 proyection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+//
+//	glm::mat4 MVP = proyection * visor*trans;
+//	//pasarle matriz de traslación al shader
+//	GLuint MVP_ID = glGetUniformLocation(programID, "MVP");
+//
+//	//GLuint color_ID = glGetUniformLocation(programID, "vcolor");
+//	//glm::vec4 color = glm::vec4(1, 1, 0, 0);
+//
+//	GLuint texSamplerID = glGetUniformLocation(programID, "sampler");
+//
+//	glUniformMatrix4fv(MVP_ID, 1, GL_FALSE, &MVP[0][0]);//[0][0] por que le pasamos el puntero a la posición inicial del array.
+//	//el vector trans esta consecutivo en memoria pero nos podemos referir a el como array bidimensional
+//	glActiveTexture(GL_TEXTURE0);
+//	glBindTexture(GL_TEXTURE_2D, texID);//Para solo una textura no haría falta esta línea. Para mas, sí. Hay que bindear cada vez.
+//	glUniform1i(texSamplerID, 0);
+//	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+//}
 
 void MouseManager(GLFWwindow* win, double xpos, double ypos)
 {
@@ -334,11 +377,11 @@ int main(int argc, char** argv)
 	lastX = lastY = 0;
 
 	//polygon* pol = createPolygon(); //Antes de implementar carga de xml. Una vez implementada:
-	polygon* pol = loadMSH("triangulo.msh");
+	//polygon* pol = loadMSH("triangulo.msh");
+	polygon* pol = loadMSH("cubo.msh");
 	GLint programID = compileAndLinkShaderProgram(vertexShaderSRC, fragmentShaderSRC);
 	uploadPolygonGPU(pol,programID);
 
-	
 	//GLuint texID = cargaTextura("data/top.png");
 	GLuint texID = cargaTextura(pol->textureName);
 
@@ -347,6 +390,7 @@ int main(int argc, char** argv)
 	{
 		updateCamera(&cam, &lastX, &lastY, win1);
 		DrawTriangle(pol,programID,cam,texID);
+		//DrawTriangle2(pol, programID, cam, texID);
 		glfwSwapBuffers(win1);
 		glfwPollEvents();
 	}
