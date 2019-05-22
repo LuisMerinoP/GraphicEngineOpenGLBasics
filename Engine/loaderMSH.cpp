@@ -85,7 +85,7 @@ polygon* loadMSH(const char* fileName)
 		}
 
 		std::unique_ptr<std::vector<std::string>> coords = splitString(bufferNode.child("coords").text().as_string(), ',');
-		std::unique_ptr<std::vector<std::string>> textCoords = splitString(bufferNode.child("textCoords").text().as_string(), ',');
+		std::unique_ptr<std::vector<std::string>> textCoords = splitString(bufferNode.child("texCoords").text().as_string(), ',');
 		/*std::vector<std::string>* coords = splitString(bufferNode.child("coords").text().as_string(), ',');
 		std::vector<std::string>* texCoords = splitString(bufferNode.child("texCoords").text().as_string(), ',');*/
 		std::unique_ptr<std::vector<std::string>> normals = splitString(bufferNode.child("normals").text().as_string(), ',');
@@ -93,7 +93,7 @@ polygon* loadMSH(const char* fileName)
 
 		pol->vertices = new vertex_t[coords->size() + textCoords->size()];
 		pol->vertexCompCount = bufferNode.child("coords").attribute("vertexCompCount").as_int();
-		pol->vertexCompCount = bufferNode.child("texCoords").attribute("texCoordCompCount").as_int();
+		pol->texCoordCompCount = bufferNode.child("texCoords").attribute("texCoordCompCount").as_int();
 		pol->normalsCompCount = bufferNode.child("normals").attribute("normalCompCount").as_int();
 
 

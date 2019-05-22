@@ -86,14 +86,16 @@ void uploadPolygonGPU(polygon* pol, GLuint programID)
 	/*Hay que decirle a opengl en que formato estan los datos. 
 	Para que opengl entienda el formato en que subimos los datos a GPU hay que indicarselo aqui
 	con esta función.*/
-	glVertexAttribPointer(vpos,pol->vertexCompCount,GL_FLOAT,GL_FALSE,pol->stride*sizeof(float),nullptr);
+	glVertexAttribPointer(vpos,pol->vertexCompCount,GL_FLOAT,GL_FALSE,
+		pol->stride*sizeof(float),nullptr);
 	glEnableVertexAttribArray(vpos);
 
-	glVertexAttribPointer(vtex,pol->texCoordCompCount,GL_FLOAT,GL_FALSE, pol->stride*sizeof(float),(void*)(pol->vertexCompCount*sizeof(float)));
-	
-	glVertexAttribPointer(vnormal, pol->normalsCompCount, GL_FLOAT, GL_FALSE, pol->stride * sizeof(float), (void*)((pol->vertexCompCount + pol->vertexCompCount) * sizeof(float)));
-	//activar
+	glVertexAttribPointer(vtex,pol->texCoordCompCount,GL_FLOAT,GL_FALSE, 
+		pol->stride*sizeof(float),(void*)(pol->vertexCompCount*sizeof(float)));
 	glEnableVertexAttribArray(vtex);
+	glVertexAttribPointer(vnormal, pol->normalsCompCount, GL_FLOAT, GL_FALSE, 
+		pol->stride * sizeof(float), (void*)((pol->vertexCompCount + pol->texCoordCompCount) * sizeof(float)));
+	glEnableVertexAttribArray(vnormal);
 }
 
 void MultMatrix(float* mtx,int row, int col, float* v1, float* vres)
@@ -198,8 +200,6 @@ GLuint cargaTextura(const char* tex)
 //Implementamos objeto CAMERA
 void DrawTriangle(polygon* pol, GLuint programID, camera_t cam, GLuint texID)
 {
-	glClear(GL_COLOR_BUFFER_BIT); //memory buffer reset
-
 	//Para dibujar desde GPU:
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	/*no debería ser necesario por que no hemos seleccionado ningún otro objeto pero añadimos por si acaso.
@@ -370,6 +370,8 @@ int main(int argc, char** argv)
 
 	glewInit();//hay que ponerlo despues de glfwInit();
 
+	glEnable(GL_DEPTH_TEST);
+
 	cam.lookAt = glm::vec3(0, 0, 0);
 	cam.position = glm::vec3(0, 0, 2);//recordar que hacia atras es positivo
 	cam.up = glm::vec3(0, 1, 0);
@@ -388,6 +390,7 @@ int main(int argc, char** argv)
 	//mientras no cerrada {}. Tenemos que hacer glfwSwapBuffers(win1) al final para que se pinte en pantalla
 	while (!(glfwWindowShouldClose(win1)))
 	{
+		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); //memory buffer reset
 		updateCamera(&cam, &lastX, &lastY, win1);
 		DrawTriangle(pol,programID,cam,texID);
 		//DrawTriangle2(pol, programID, cam, texID);

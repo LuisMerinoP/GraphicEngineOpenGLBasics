@@ -37,10 +37,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="triangulo.msh">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="data\cubo.msh">
+    <None Include="cubo.msh">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
