@@ -29,9 +29,12 @@ const GLchar* vertexShaderSRC = ""\
 "attribute vec3 vnormal;"\
 "varying vec2 ftex;"\
 "varying vec3 fnormal;"\
+"varying vec3 fpos;"\
+
 "void main()"\
 "{	gl_Position = projection*view*model * vec4(vpos,1);"\
-"	ftex=vtex;"\
+"	fpos = (model*vec4(vpos,1)).xyz;"\
+"	ftex = vtex;"\
 "	fnormal=vnormal;"\
 " }"\
 ""\
@@ -40,12 +43,18 @@ const GLchar* fragmentShaderSRC = ""\
 "uniform sampler2D sampler;"\
 "uniform float ambientStrength;"\
 "uniform vec3 lightColor;"\
+"uniform vec3 lightPos;"\
 "varying vec2 ftex;"\
 "varying vec3 fnormal;"\
+"varying vec3 fpos;"\
 "void main()"\
 "{"\
 	"vec3 ambiental = ambientStrength * lightColor;"\
-	"gl_FragColor = vec4(ambiental,1) * texture2D(sampler,ftex);"\
+	"vec3 norm = normalize(fnormal);"\
+	"vec3 lightDir = normalize(lightPos-fpos);"\
+	"vec3 diffuse = max(dot(fnormal, lightDir),0.0) * lightColor;"\
+	"vec3 finalLight = ambiental + diffuse;"\
+	"gl_FragColor = vec4(finalLight,1) * texture2D(sampler,ftex);"\
 "}"\
 "";
 

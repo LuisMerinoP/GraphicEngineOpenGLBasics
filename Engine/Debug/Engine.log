@@ -1,55 +1,77 @@
-﻿  main.cpp
+﻿  ShaderSRC.cpp
+  main.cpp
 c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(24): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(318): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(319): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(330): warning C4305: '-=': truncation from 'double' to 'T'
+c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(321): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(322): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(333): warning C4305: '-=': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(331): warning C4305: '-=': truncation from 'double' to 'T'
+c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(334): warning C4305: '-=': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(337): warning C4305: '+=': truncation from 'double' to 'T'
+c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(340): warning C4305: '+=': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(338): warning C4305: '+=': truncation from 'double' to 'T'
+c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(341): warning C4305: '+=': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(344): warning C4305: '-=': truncation from 'double' to 'T'
+c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(347): warning C4305: '-=': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(345): warning C4305: '-=': truncation from 'double' to 'T'
+c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(348): warning C4305: '-=': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(352): warning C4305: '+=': truncation from 'double' to 'T'
+c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(355): warning C4305: '+=': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(353): warning C4305: '+=': truncation from 'double' to 'T'
+c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(356): warning C4305: '+=': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(387): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
+c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(371): warning C4305: '-=': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(388): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
+c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(372): warning C4305: '-=': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
+c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(379): warning C4305: '+=': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(380): warning C4305: '+=': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(405): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\luis\desktop\mastercompu\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(406): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Generating Code...
   Engine.vcxproj -> C:\Users\Luis\Desktop\MasterCompu\ApisTridimensionales\Proyectos\PracticasLuis\CopiasSegEngineEtapasClase\Engine\Engine\Debug\Engine.exe

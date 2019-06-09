@@ -268,10 +268,13 @@ void DrawTriangle(polygon* pol, GLuint programID, camera_t cam, GLuint texID, li
 	//get the light variables IDs of the shader 
 	GLuint lightColor_ID = glGetUniformLocation(programID, "lightColor");
 	GLuint ambientStrenght_ID = glGetUniformLocation(programID, "ambientStrength");
+	GLuint lightPos_ID = glGetUniformLocation(programID, "lightPos");
 
 	//upload uniforms
 	glUniform3f(lightColor_ID, light->color.x, light->color.y, light->color.z);
 	glUniform1f(ambientStrenght_ID, light->ambientalStrength);
+	glUniform3f(lightPos_ID, light->pos.x, light->pos.y, light->pos.z);
+
 
 	glDrawElements(GL_TRIANGLES, pol->vertexIndexCount, GL_UNSIGNED_INT, nullptr);
 
@@ -361,6 +364,21 @@ void KeyBoardManager(GLFWwindow* win, int key, int scancode, int action, int mod
 		case GLFW_KEY_ESCAPE:
 		{
 			exit(0);
+		}
+		case GLFW_KEY_G:
+		{
+			//pos[1] += 0.1;//pos[1] es y
+			cam.position.y -= -0.1;
+			cam.lookAt.y -= -0.1;//cuando nos movemos derecha/izquierda, mover el punto al que estamos mirando
+
+			break;
+		}
+		case GLFW_KEY_T:
+		{
+			//pos[1] -= 0.1;//pos[1] es y
+			cam.position.y += -0.1;
+			cam.lookAt.y += -0.1;//cuando nos movemos derecha/izquierda, mover el punto al que estamos mirando
+			break;
 		}
 		default:
 			break;
