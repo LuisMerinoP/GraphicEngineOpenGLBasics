@@ -35,6 +35,14 @@ typedef struct camera_t
 	glm::vec3 up;//our up direction.
 }camera_t;
 
+typedef struct light_t
+{
+	glm::vec3 color;
+	float const ambientalStrength;
+	float diffuseStrength;
+	glm::vec3 pos;
+}light_t;
+
 //polygon* createPolygon()
 //{
 //	//reservamos la estructura
