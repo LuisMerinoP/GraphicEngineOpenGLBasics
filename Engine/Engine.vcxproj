@@ -122,14 +122,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="camera.cpp" />
+    <ClCompile Include="light.cpp" />
     <ClCompile Include="loaderMSH.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="object_t.cpp" />
     <ClCompile Include="ShaderSRC.cpp" />
+    <ClCompile Include="texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="light.h" />
     <ClInclude Include="loaderMSH.h" />
+    <ClInclude Include="object_t.h" />
     <ClInclude Include="shaderSource.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cubo.msh" />

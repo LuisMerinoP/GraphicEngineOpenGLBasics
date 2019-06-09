@@ -45,6 +45,7 @@ const GLchar* fragmentShaderSRC = ""\
 "uniform vec3 lightColor;"\
 "uniform vec3 lightPos;"\
 "uniform vec3 eyePos;"\
+"uniform int lightEnable;"\
 "varying vec2 ftex;"\
 "varying vec3 fnormal;"\
 "varying vec3 fpos;"\
@@ -62,8 +63,11 @@ const GLchar* fragmentShaderSRC = ""\
 	"vec3 specular = pow(max(dot(viewDir,reflectDir),0), shininess)*lightColor;"\
 ""\
 	"vec3 finalLight = ambiental + diffuse + specular;"\
-	"gl_FragColor = vec4(finalLight,1) * texture2D(sampler,ftex);"\
-"}"\
+	"if (lightEnable == 1)"\
+	"	gl_FragColor = vec4(finalLight,1) * texture2D(sampler,ftex);"\
+	"else"\
+	"	gl_FragColor = texture2D(sampler,ftex);"\
+	"}"\
 "";
 
 

@@ -7,6 +7,8 @@ nuestro ejecutable será mas grande pero no importa*/
 //Aconsejable poner siempre directorios en mayúsculas
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include <list>
+#include "texture.h"
 
 typedef struct vertex_t
 {
@@ -15,7 +17,7 @@ typedef struct vertex_t
 	glm::vec3 normal;
 }vertex_t;
 
-typedef struct polygon
+typedef struct mesh_t
 {
 	char* textureName;
 	vertex_t* vertices;//buffer de datos por vertice<posicion xyz> <textura u,v> <normal xyz> 
@@ -34,6 +36,9 @@ typedef struct polygon
 	GLuint bufferVertexID; //vertex buffer
 	GLuint bufferIndexID; //index buffer
 	GLuint vertexArrayID; //vertex array (object)
-}polygon;
 
-polygon* loadMSH(const char* fileName);
+	texture_t* texture;
+
+}mesh_t;
+
+std::list<mesh_t*>* loadMSH(const char* fileName);
