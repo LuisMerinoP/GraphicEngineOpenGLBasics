@@ -18,15 +18,19 @@
 //"{ gl_FragColor = fcolor;" \
 //"}"\
 //"";
+
+//need to separate MVP matrix in model, view projection for the light implementation
 const GLchar* vertexShaderSRC = ""\
-"uniform mat4 MVP;"\
+"uniform mat4 model;"\
+"uniform mat4 view;"\
+"uniform mat4 projection;"\
 "attribute vec3 vpos;"\
 "attribute vec2 vtex;"\
 "attribute vec3 vnormal;"\
 "varying vec2 ftex;"\
 "varying vec3 fnormal;"\
 "void main()"\
-"{	gl_Position = MVP * vec4(vpos,1);"\
+"{	gl_Position = projection*view*model * vec4(vpos,1);"\
 "	ftex=vtex;"\
 "	fnormal=vnormal;"\
 " }"\
@@ -34,17 +38,22 @@ const GLchar* vertexShaderSRC = ""\
 "";
 const GLchar* fragmentShaderSRC = ""\
 "uniform sampler2D sampler;"\
+"uniform float ambientStrength;"\
+"uniform vec3 lightColor;"\
 "varying vec2 ftex;"\
 "varying vec3 fnormal;"\
-"void main() "\
-"{ gl_FragColor = texture2D(sampler,ftex); }" \
+"void main()"\
+"{"\
+	"vec3 ambiental = ambientStrength * lightColor;"\
+	"gl_FragColor = vec4(ambiental,1) * texture2D(sampler,ftex);"\
+"}"\
 "";
 
 
 
 GLint checkShaderError(GLint shaderID)
 {
-	GLint success = 1;//error a true
+	GLint success = 1;//error a trueB
 	char* infoLog = new char[1024];
 	glGetShaderiv(shaderID, GL_COMPILE_STATUS, &success);
 	if (!success)

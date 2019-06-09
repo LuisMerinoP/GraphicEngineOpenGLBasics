@@ -38,10 +38,25 @@ typedef struct camera_t
 typedef struct light_t
 {
 	glm::vec3 color;
-	float const ambientalStrength;
+	float ambientalStrength;
 	float diffuseStrength;
 	glm::vec3 pos;
 }light_t;
+
+
+
+light_t* createLight(glm::vec3 color, float ambStrength, float diffuseStrength, glm::vec3 pos)
+{
+	light_t* light = new light_t;
+
+	light->color = color;
+	light->ambientalStrength = ambStrength;
+	light->diffuseStrength = diffuseStrength;
+	light->pos = pos;
+
+	return light;
+}
+
 
 //polygon* createPolygon()
 //{
@@ -206,7 +221,7 @@ GLuint cargaTextura(const char* tex)
 
 
 //Implementamos objeto CAMERA
-void DrawTriangle(polygon* pol, GLuint programID, camera_t cam, GLuint texID)
+void DrawTriangle(polygon* pol, GLuint programID, camera_t cam, GLuint texID, light_t* light)
 {
 	//Para dibujar desde GPU:
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -220,25 +235,44 @@ void DrawTriangle(polygon* pol, GLuint programID, camera_t cam, GLuint texID)
 	glm::mat4  rot = glm::rotate(glm::mat4(1.0), rotAngle, glm::vec3(0, 1, 0));
 	trans = trans * rot;
 	//z positiva hacia atras. Para retrasar z ponemos 2.
-	glm::mat4 visor = glm::lookAt(cam.position,cam.lookAt, cam.up);
+	glm::mat4 view = glm::lookAt(cam.position,cam.lookAt, cam.up);
 
 	glm::mat4 proyection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 
-	glm::mat4 MVP = proyection * visor*trans;
+	//not needed since with ligth implementation MVP multiplication is done in the shader
+	//glm::mat4 MVP = proyection * view * trans;
+	
 	//pasarle matriz de traslación al shader
-	GLuint MVP_ID = glGetUniformLocation(programID, "MVP");
+	//GLuint MVP_ID = glGetUniformLocation(programID, "MVP"); //with light implemetation MVP is separated in model, view projection in the shader
+	GLuint model_ID = glGetUniformLocation(programID, "model");
+	GLuint view_ID = glGetUniformLocation(programID, "view");
+	GLuint projection_ID = glGetUniformLocation(programID, "projection");
 
 	//GLuint color_ID = glGetUniformLocation(programID, "vcolor");
 	//glm::vec4 color = glm::vec4(1, 1, 0, 0);
 
 	GLuint texSamplerID = glGetUniformLocation(programID, "sampler");
 
-	glUniformMatrix4fv(MVP_ID, 1, GL_FALSE, &MVP[0][0]);//[0][0] por que le pasamos el puntero a la posición inicial del array.
-	//el vector trans esta consecutivo en memoria pero nos podemos referir a el como array bidimensional
+	//with light implemetation MVP is separated in model, view projection in the shader
+	//glUniformMatrix4fv(MVP_ID, 1, GL_FALSE, &MVP[0][0]);//[0][0] por que le pasamos el puntero a la posición inicial del array.//el vector trans esta consecutivo en memoria pero nos podemos referir a el como array bidimensional
+	glUniformMatrix4fv(model_ID, 1, GL_FALSE, &trans[0][0]);
+	glUniformMatrix4fv(view_ID, 1, GL_FALSE, &view[0][0]);
+	glUniformMatrix4fv(projection_ID, 1, GL_FALSE, &proyection[0][0]);
+	
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texID);//Para solo una textura no haría falta esta línea. Para mas, sí. Hay que bindear cada vez.
 	glUniform1i(texSamplerID,0);
 	//glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);//introducimos variables del pol
+	
+	
+	//get the light variables IDs of the shader 
+	GLuint lightColor_ID = glGetUniformLocation(programID, "lightColor");
+	GLuint ambientStrenght_ID = glGetUniformLocation(programID, "ambientStrength");
+
+	//upload uniforms
+	glUniform3f(lightColor_ID, light->color.x, light->color.y, light->color.z);
+	glUniform1f(ambientStrenght_ID, light->ambientalStrength);
+
 	glDrawElements(GL_TRIANGLES, pol->vertexIndexCount, GL_UNSIGNED_INT, nullptr);
 
 }
@@ -395,12 +429,16 @@ int main(int argc, char** argv)
 	//GLuint texID = cargaTextura("data/top.png");
 	GLuint texID = cargaTextura(pol->textureName);
 
+
+	//crate light. white color = (1,1,1)
+	light_t* light = createLight(glm::vec3(1, 1, 1), 0.5, 0.5, glm::vec3(0, 2, 2));
+
 	//mientras no cerrada {}. Tenemos que hacer glfwSwapBuffers(win1) al final para que se pinte en pantalla
 	while (!(glfwWindowShouldClose(win1)))
 	{
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); //memory buffer reset
 		updateCamera(&cam, &lastX, &lastY, win1);
-		DrawTriangle(pol,programID,cam,texID);
+		DrawTriangle(pol, programID, cam,texID, light);
 		//DrawTriangle2(pol, programID, cam, texID);
 		glfwSwapBuffers(win1);
 		glfwPollEvents();
