@@ -30,7 +30,7 @@ float triangle[12] = {
 
 typedef struct camera_t
 {
-	glm::vec3 position;//position
+	glm::vec3 position = glm::vec3(0,0,2);//default pos
 	glm::vec3 lookAt;//point we are looking at
 	glm::vec3 up;//our up direction.
 }camera_t;
@@ -269,11 +269,14 @@ void DrawTriangle(polygon* pol, GLuint programID, camera_t cam, GLuint texID, li
 	GLuint lightColor_ID = glGetUniformLocation(programID, "lightColor");
 	GLuint ambientStrenght_ID = glGetUniformLocation(programID, "ambientStrength");
 	GLuint lightPos_ID = glGetUniformLocation(programID, "lightPos");
+	GLuint eyePos_ID = glGetUniformLocation(programID, "eyePos");
+
 
 	//upload uniforms
 	glUniform3f(lightColor_ID, light->color.x, light->color.y, light->color.z);
 	glUniform1f(ambientStrenght_ID, light->ambientalStrength);
 	glUniform3f(lightPos_ID, light->pos.x, light->pos.y, light->pos.z);
+	glUniform3f(eyePos_ID, cam.position.x, cam.position.y, cam.position.z);
 
 
 	glDrawElements(GL_TRIANGLES, pol->vertexIndexCount, GL_UNSIGNED_INT, nullptr);
@@ -449,14 +452,14 @@ int main(int argc, char** argv)
 
 
 	//crate light. white color = (1,1,1)
-	light_t* light = createLight(glm::vec3(1, 1, 1), 0.5, 0.5, glm::vec3(0, 2, 2));
+	light_t* light = createLight(glm::vec3(1, 1, 1), 0.5, 0.5, glm::vec3(0, 0, 2));
 
 	//mientras no cerrada {}. Tenemos que hacer glfwSwapBuffers(win1) al final para que se pinte en pantalla
 	while (!(glfwWindowShouldClose(win1)))
 	{
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); //memory buffer reset
 		updateCamera(&cam, &lastX, &lastY, win1);
-		DrawTriangle(pol, programID, cam,texID, light);
+		DrawTriangle(pol, programID, cam, texID, light);
 		//DrawTriangle2(pol, programID, cam, texID);
 		glfwSwapBuffers(win1);
 		glfwPollEvents();
