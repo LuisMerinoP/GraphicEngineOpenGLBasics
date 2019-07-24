@@ -178,6 +178,17 @@ void KeyBoardManager(GLFWwindow* win, int key, int scancode, int action, int mod
 			//pos[1] -= 0.1;//pos[1] es y
 			cam.position.z += -0.1;
 			cam.lookAt.z += -0.1;//cuando nos movemos derecha/izquierda, mover el punto al que estamos mirando
+			/*std::cout << "pos: " << "\n";
+			std::cout << "(" << cam.position.x << ", " << cam.position.y << ", " << cam.position.z << ")" << "\n";
+			std::cout << "lookat: " << "\n";
+			std::cout << "(" << cam.lookAt.x << ", " << cam.lookAt.y << ", " << cam.lookAt.z << ")" << "\n";*/
+			cam.position.x = -0.8f;
+			cam.position.y = 0.0f;
+			cam.position.z = 0.0f;
+			cam.lookAt.x = 14.82f;
+			cam.lookAt.y = 1.33f;
+			cam.lookAt.z = -2.0f;
+
 			break;
 		}
 		case GLFW_KEY_F:

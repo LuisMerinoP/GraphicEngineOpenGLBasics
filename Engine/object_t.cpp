@@ -7,7 +7,7 @@ void uploadMeshGPU(mesh_t* pol, GLuint programID)
 	//posición de variables vpos y vtex
 	GLuint vpos = glGetAttribLocation(programID, "vpos");
 	GLuint vtex = glGetAttribLocation(programID, "vtex");
-	GLuint vnormal = glGetAttribLocation(programID, "vnormal");
+	//GLuint vnormal = glGetAttribLocation(programID, "vnormal");
 
 	glGenVertexArrays(1, &(pol->vertexArrayID));
 	glGenBuffers(1, &(pol->bufferVertexID));
@@ -37,9 +37,9 @@ void uploadMeshGPU(mesh_t* pol, GLuint programID)
 	glVertexAttribPointer(vtex, pol->texCoordCompCount, GL_FLOAT, GL_FALSE,
 		pol->stride * sizeof(float), (void*)(pol->vertexCompCount * sizeof(float)));
 	glEnableVertexAttribArray(vtex);
-	glVertexAttribPointer(vnormal, pol->normalsCompCount, GL_FLOAT, GL_FALSE,
+	/*glVertexAttribPointer(vnormal, pol->normalsCompCount, GL_FLOAT, GL_FALSE,
 		pol->stride * sizeof(float), (void*)((pol->vertexCompCount + pol->texCoordCompCount) * sizeof(float)));
-	glEnableVertexAttribArray(vnormal);
+	glEnableVertexAttribArray(vnormal);*/
 }
 
 
