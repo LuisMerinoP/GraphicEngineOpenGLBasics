@@ -17,6 +17,8 @@ nuestro ejecutable será mas grande pero no importa*/
 #include "light.h"
 #include "billboard.h"
 
+#include "emitter.h"
+
 float pos[4] = { 0.0,0.0,0.0,1.0};
 //float pos1[4] = { 3.0,0.0,0.0,1.0 };
 float rotAngle = 0;
@@ -304,7 +306,10 @@ int main(int argc, char** argv)
 	//mientras (no cerrada)
 	glewInit();
 
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 
 	cam.lookAt = glm::vec3(0, 0, 0);
 	cam.pos = glm::vec3(0, 0, 2);
@@ -317,9 +322,13 @@ int main(int argc, char** argv)
 
 	//object_t* obj = createObject("data/asian_town.msh.xml", programID);//createPolygon();
 	//obj->scaling = glm::vec3(10, 10, 10);
-	object_t* obj = createBillboard("data/top.png", programID);
+	//object_t* obj = createBillboard("data/smoke.png", programID);
+	emitter_t* emi1 = createEmitter("data/smoke.png", programID, 2, 5, 0.1, 0.3, glm::vec3(-0.2, 0.5, -0.5), glm::vec3(0.2, 0.9, 0.5),
+		glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), glm::vec3(0, 0, 0), 2);
+
+	
 	object_t* obj2 = createBillboard("data/top.png", programID);
-	obj2->position = glm::vec3(-0.5, 0.0, 0.0);
+	obj2->position = glm::vec3(0.0f, -1.0f, 0.0f);
 
 	light_t* light = createLight(glm::vec3(1, 1, 1), 0.5, 0.5, glm::vec3(0, 0, 2));
 
@@ -327,12 +336,14 @@ int main(int argc, char** argv)
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		updateCamera(&cam, &lastX, &lastY, win1);
-		updateBillboard(obj, &cam);
+
+		updateEmitter(emi1, programID);
+		//updateBillboard(obj, &cam);
 		updateBillboard(obj2, &cam);
 
-		drawObject(obj, cam, programID, light);
+		drawEmitter(emi1, &cam, programID, light);
+		//drawObject(obj, cam, programID, light);
 		drawObject(obj2, cam, programID, light);
-
 
 		glfwSwapBuffers(win1);
 		glfwPollEvents();
