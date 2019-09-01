@@ -323,7 +323,7 @@ int main(int argc, char** argv)
 	//object_t* obj = createObject("data/asian_town.msh.xml", programID);//createPolygon();
 	//obj->scaling = glm::vec3(10, 10, 10);
 	//object_t* obj = createBillboard("data/smoke.png", programID);
-	emitter_t* emi1 = createEmitter("data/smoke.png", programID, 2, 5, 0.1, 0.3, glm::vec3(-0.2, 0.5, -0.5), glm::vec3(0.2, 0.9, 0.5),
+	emitter_t* emi1 = createEmitter("data/smoke.png", programID, 2, 5, 0.1, 0.3, glm::vec3(-0.2, 0.5, -0.5), glm::vec3(0.2, 5.5, 0.5),
 		glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), glm::vec3(0, 0, 0), 2);
 
 	
