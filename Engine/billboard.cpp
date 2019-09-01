@@ -1,23 +1,37 @@
 #include "billboard.h"
 
-object_t* createBillboard(const char* texture, GLuint programID) {
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+object_t* createBillboard(const char* texture, GLuint programID)
+{
 	mesh_t* bboardMesh = new mesh_t;
+	memset(bboardMesh, 0, sizeof(mesh_t));
 	bboardMesh->vertexCompCount = 3;
 	bboardMesh->normalsCompCount = 3;
 	bboardMesh->texCoordCompCount = 2;
+	bboardMesh->tangentsCompCount = 3;
 
 	bboardMesh->normalsCount = 6;
 	bboardMesh->vertexCount = 6;
 	bboardMesh->texCoordCount = 6;
+	bboardMesh->tangentsCount = 6;
 
-	bboardMesh->textureName = new char[strlen(texture) + 1];
-	memcpy(bboardMesh->textureName, texture, strlen(texture) + 1);
+	bboardMesh->useNormalTex = 0;
+
+	bboardMesh->texture = new texture_t;
+	bboardMesh->texture->textureName = new std::vector<std::string>();
+	bboardMesh->texture->textureName->push_back(std::string(texture));
 
 	bboardMesh->vertices = new vertex_t[6];//buffer datos por vertice<posicion x,y,z> <textura u,v> <normal <x,y,z>
 	bboardMesh->vertexIndex = new int[6];
 	bboardMesh->vertexIndexCount = 6;
 	bboardMesh->triangleCount = 2;
-	bboardMesh->stride = 8;
+	bboardMesh->stride = 11;
+
+	bboardMesh->useDepthWrite = 0;
+	bboardMesh->shininess = 1;
 
 	for (int i = 0; i < 6; i++)
 	{
@@ -54,11 +68,12 @@ object_t* createBillboard(const char* texture, GLuint programID) {
 		it++
 		)
 	{
-		(*it)->texture = createTexture((*it)->textureName);
+		createTexture((*it)->texture);
 		uploadMesh((*it), programID);
 	}
 
 	return newObj;
+
 }
 
 
@@ -70,4 +85,7 @@ void updateBillboard(object_t* bboard, camera_t* cam)
 	bboard->modelMtx[1][3] = 0;
 	bboard->modelMtx[2][3] = 0;
 	bboard->modelMtx[3] = glm::vec4(bboard->position, 1);
+
+	bboard->modelMtx = glm::scale(bboard->modelMtx, bboard->scaling);
+
 }

@@ -1,4 +1,5 @@
-﻿  main.cpp
+﻿  loaderMSH.cpp
+  main.cpp
 c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(30): warning C4305: 'initializing': truncation from 'double' to 'float'
 c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(172): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(173): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
@@ -62,5 +63,5 @@ c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\prac
           [
               T=float
           ]
-c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(327): warning C4305: 'argument': truncation from 'double' to 'float'
+  Generating Code...
   Engine.vcxproj -> C:\Users\Luis\Desktop\MasterCompuProvisional\ApisTridimensionales\Proyectos\PracticasLuis\CopiasSegEngineEtapasClase\Engine\Engine\Debug\Engine.exe

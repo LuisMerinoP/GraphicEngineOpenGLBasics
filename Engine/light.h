@@ -13,6 +13,7 @@ typedef struct light_t
 	float ambientalStrength;
 	float diffuseStrength;
 	glm::vec3 pos;
+	int enabled;
 }light_t;
 
 light_t* createLight(glm::vec3 color, float ambientalStrength, float diffuseStrength, glm::vec3 pos);

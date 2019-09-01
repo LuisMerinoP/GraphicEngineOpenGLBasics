@@ -46,11 +46,12 @@ typedef struct vertex_t
 	glm::vec3 pos;
 	glm::vec2 texCoord;
 	glm::vec3 normal;
+	glm::vec3 tangent;
 }vertex_t;
 
 typedef struct mesh_t
 {
-	char* textureName;
+	//char* textureName;
 	vertex_t* vertices;//buffer datos por vertice<posicion x,y,z> <textura u,v> <normal <x,y,z>
 	int* vertexIndex;
 	int vertexIndexCount;
@@ -58,9 +59,11 @@ typedef struct mesh_t
 	int vertexCount;
 	int texCoordCount;
 	int normalsCount;
+	int tangentsCount;
 	int vertexCompCount;
 	int texCoordCompCount;
 	int normalsCompCount;
+	int tangentsCompCount;
 	int stride;
 
 	GLuint bufferID; //vertex buffer
@@ -68,6 +71,12 @@ typedef struct mesh_t
 	GLuint vertexArrayID; //vertex array (objeto)
 
 	texture_t* texture;
+	texture_t* normalTexture;
+
+	float shininess;
+	int useNormalTex;
+	int useDepthWrite;
+	int useAlpha;
 
 }mesh_t;
 

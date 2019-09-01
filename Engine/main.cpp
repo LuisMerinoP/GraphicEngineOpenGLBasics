@@ -306,7 +306,7 @@ int main(int argc, char** argv)
 	//mientras (no cerrada)
 	glewInit();
 
-	//glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -320,30 +320,33 @@ int main(int argc, char** argv)
 
 	GLint programID = compileAndLinkShaderProgram(vertexShaderSRC, fragmentShaderSRC);
 
-	//object_t* obj = createObject("data/asian_town.msh.xml", programID);//createPolygon();
-	//obj->scaling = glm::vec3(10, 10, 10);
+	object_t* obj = createObject("data/normalMapCube.msh", programID);//createPolygon();
 	//object_t* obj = createBillboard("data/smoke.png", programID);
-	emitter_t* emi1 = createEmitter("data/smoke.png", programID, 2, 5, 0.1, 0.3, glm::vec3(-0.2, 0.5, -0.5), glm::vec3(0.2, 5.5, 0.5),
+	
+	/*emitter_t* emi1 = createEmitter("data/smoke.png", programID, 2, 5, 0.1, 0.3, glm::vec3(-0.2, 0.5, -0.5), glm::vec3(0.2, 5.5, 0.5),
 		glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), glm::vec3(0, 0, 0), 2);
 
 	
 	object_t* obj2 = createBillboard("data/top.png", programID);
-	obj2->position = glm::vec3(0.0f, -1.0f, 0.0f);
+	obj2->position = glm::vec3(0.0f, -1.0f, 0.0f);*/
 
 	light_t* light = createLight(glm::vec3(1, 1, 1), 0.5, 0.5, glm::vec3(0, 0, 2));
+	light->enabled = 1;
+	double initTime = 0;
 
 	while (!(glfwWindowShouldClose(win1)))
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		updateCamera(&cam, &lastX, &lastY, win1);
 
-		updateEmitter(emi1, programID);
+		//updateEmitter(emi1, programID);
 		//updateBillboard(obj, &cam);
-		updateBillboard(obj2, &cam);
+		//updateBillboard(obj2, &cam);
 
-		drawEmitter(emi1, &cam, programID, light);
+		//drawEmitter(emi1, &cam, programID, light);
 		//drawObject(obj, cam, programID, light);
-		drawObject(obj2, cam, programID, light);
+		updateObject(obj);
+		drawObject(obj, cam, programID, light);
 
 		glfwSwapBuffers(win1);
 		glfwPollEvents();

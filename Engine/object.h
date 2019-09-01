@@ -18,7 +18,6 @@ typedef struct object_t
 	glm::vec3 position;
 	glm::vec3 rotation;
 	glm::vec3 scaling;
-
 	glm::mat4 modelMtx;
 
 }object_t;
