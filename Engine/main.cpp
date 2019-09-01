@@ -306,7 +306,7 @@ int main(int argc, char** argv)
 	//mientras (no cerrada)
 	glewInit();
 
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -320,6 +320,8 @@ int main(int argc, char** argv)
 
 	GLint programID = compileAndLinkShaderProgram(vertexShaderSRC, fragmentShaderSRC);
 
+	object_t* sky = createObject("data/skybox.msh.xml", programID);//createPolygon();
+	sky->scaling = glm::vec3(10, 10, 10);
 	object_t* obj = createObject("data/normalMapCube.msh", programID);//createPolygon();
 	//object_t* obj = createBillboard("data/smoke.png", programID);
 	
@@ -345,8 +347,12 @@ int main(int argc, char** argv)
 
 		//drawEmitter(emi1, &cam, programID, light);
 		//drawObject(obj, cam, programID, light);
+
+		updateObject(sky);
 		updateObject(obj);
+		drawObject(sky, cam, programID, light);
 		drawObject(obj, cam, programID, light);
+
 
 		glfwSwapBuffers(win1);
 		glfwPollEvents();

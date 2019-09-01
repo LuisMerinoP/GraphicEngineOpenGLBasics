@@ -2,8 +2,7 @@
 
 
 
-void uploadMesh(mesh_t* pol, GLuint programID)
-{
+void uploadMesh(mesh_t* pol, GLuint programID){
 	glUseProgram(programID);
 	GLint vpos = glGetAttribLocation(programID, "vpos");
 	GLint vtex = glGetAttribLocation(programID, "vtex");
@@ -35,12 +34,9 @@ void uploadMesh(mesh_t* pol, GLuint programID)
 	glVertexAttribPointer(vtangent, pol->tangentsCompCount, GL_FLOAT, GL_FALSE,
 		pol->stride * sizeof(float), (void*)((pol->vertexCompCount + pol->texCoordCompCount + pol->normalsCompCount) * sizeof(float)));
 	glEnableVertexAttribArray(vtangent);
-
 }
 
-void drawMesh(glm::mat4 model, mesh_t* pol, GLuint programID, camera_t cam, light_t* light)
-{
-
+void drawMesh(glm::mat4 model, mesh_t* pol, GLuint programID, camera_t cam, light_t* light){
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(pol->vertexArrayID);
 
@@ -48,7 +44,7 @@ void drawMesh(glm::mat4 model, mesh_t* pol, GLuint programID, camera_t cam, ligh
 
 	glm::mat4  visor = glm::lookAt(cam.pos, cam.lookAt, cam.up);
 	glm::mat4  proyection = glm::perspective(45.0f, 4.0f / 3.0f, 0.01f, 1000.0f);
-	glm::mat4 MVP = proyection * visor*model;
+	glm::mat4 MVP = proyection * visor * model;
 	glm::mat4 normalMat = glm::transpose(glm::inverse(visor*model));
 
 	GLuint model_ID = glGetUniformLocation(programID, "model");
@@ -115,21 +111,16 @@ void drawMesh(glm::mat4 model, mesh_t* pol, GLuint programID, camera_t cam, ligh
 	glUniform3f(eyePos_ID, cam.pos.x, cam.pos.y, cam.pos.z);
 
 	if (pol->useDepthWrite)
-	{
 		glEnable(GL_DEPTH_TEST);
-	}
 	else
 		glDisable(GL_DEPTH_TEST);
 
 	glDrawElements(GL_TRIANGLES, pol->vertexIndexCount, GL_UNSIGNED_INT, nullptr);
-
 }
 
 
 
-object_t* createObject(const char* mshFile, GLuint programID)
-{
-
+object_t* createObject(const char* mshFile, GLuint programID){
 	object_t* newObj = new object_t;
 	newObj->modelMtx = glm::mat4(1.0);
 	newObj->position = glm::vec3(0, 0, 0);

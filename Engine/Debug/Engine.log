@@ -1,2 +1,65 @@
-﻿  loaderMSH.cpp
+﻿  main.cpp
+c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(30): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(172): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(173): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(185): warning C4305: '-=': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(186): warning C4305: '-=': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(192): warning C4305: '+=': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(193): warning C4305: '+=': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(199): warning C4305: '-=': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(200): warning C4305: '-=': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(206): warning C4305: '+=': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(207): warning C4305: '+=': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(213): warning C4305: '-=': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(214): warning C4305: '-=': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(220): warning C4305: '+=': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+c:\users\luis\desktop\mastercompuprovisional\apistridimensionales\proyectos\practicasluis\copiassegengineetapasclase\engine\engine\engine\main.cpp(221): warning C4305: '+=': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
   Engine.vcxproj -> C:\Users\Luis\Desktop\MasterCompuProvisional\ApisTridimensionales\Proyectos\PracticasLuis\CopiasSegEngineEtapasClase\Engine\Engine\Debug\Engine.exe
