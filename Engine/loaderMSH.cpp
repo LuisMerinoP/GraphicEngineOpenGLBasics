@@ -65,6 +65,7 @@ std::list<mesh_t*>* loadMSH(const char* fileName)
 			pol->normalTexture->textureName = splitString(bufferNode.child("material").child("normal_texture").text().as_string(), ',');
 			//carga brillo
 			pol->shininess = bufferNode.child("material").child("shininess").text().as_float();
+			
 			//carga depthWrite
 			pol->useDepthWrite = (bufferNode.child("material").child("depthwrite") && bufferNode.child("material").child("depthwrite").text().as_bool() ? 1 : 0);
 			//carga vértices
