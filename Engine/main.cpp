@@ -319,10 +319,14 @@ int main(int argc, char** argv)
 
 
 	GLint programID = compileAndLinkShaderProgram(vertexShaderSRC, fragmentShaderSRC);
+	//create frameBuffer texture
+	texture_t* fbTex = new texture_t;
+	memset(fbTex, 0, sizeof(texture_t));
+	createTextureFrameBuffer(fbTex);
 
-	object_t* sky = createObject("data/skybox.msh.xml", programID);//createPolygon();
-	sky->scaling = glm::vec3(10, 10, 10);
-	object_t* obj = createObject("data/normalMapCube.msh", programID);//createPolygon();
+	//object_t* sky = createObject("data/skybox.msh.xml", programID);//createPolygon();
+	//sky->scaling = glm::vec3(10, 10, 10);
+	object_t* obj = createObject("data/scene.msh.xml", programID);//createPolygon();
 	//object_t* obj = createBillboard("data/smoke.png", programID);
 	
 	/*emitter_t* emi1 = createEmitter("data/smoke.png", programID, 2, 5, 0.1, 0.3, glm::vec3(-0.2, 0.5, -0.5), glm::vec3(0.2, 5.5, 0.5),
@@ -348,9 +352,9 @@ int main(int argc, char** argv)
 		//drawEmitter(emi1, &cam, programID, light);
 		//drawObject(obj, cam, programID, light);
 
-		updateObject(sky);
+		//updateObject(sky);
 		updateObject(obj);
-		drawObject(sky, cam, programID, light);
+		//drawObject(sky, cam, programID, light);
 		drawObject(obj, cam, programID, light);
 
 

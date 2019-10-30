@@ -1,6 +1,7 @@
 #include "texture.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+#include<iostream>
 
 void createTexture(texture_t* newTex)
 {
@@ -65,4 +66,45 @@ void createCubeMapTexture(texture_t* newTex)
 	stbi_image_free(texUp);
 	stbi_image_free(texDown);
 
+}
+
+
+bool createTextureFrameBuffer(texture_t* fbTex) {
+	//texture_t* newTex = new texture_t;
+	fbTex->texID = -1;
+	fbTex->textType  = TEXT_FB_DEPTH;
+
+	fbTex->fbID = 0;
+
+	fbTex->w = 1024;
+	fbTex->h = 1024;
+
+	glGenTextures(1, &fbTex->texID);
+	//hacerla activa
+	glBindTexture(GL_TEXTURE_2D, fbTex->texID);
+	//parámetros
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	//subir bytes
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, fbTex->w, fbTex->h, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, NULL);
+	
+	glGenFramebuffers(1, &fbTex->fbID);
+	glBindFramebuffer(GL_FRAMEBUFFER, fbTex->fbID);
+
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, fbTex->texID, 0);
+	
+	//disable colors
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
+
+	//error check
+	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+	if (status != GL_FRAMEBUFFER_COMPLETE) {
+		std::cout << "Error: " << status << "\n";
+		exit(-2);
+		return false;
+	}
+	return true;
 }

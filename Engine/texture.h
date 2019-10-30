@@ -11,9 +11,11 @@
 
 #define TEXT_2D			0
 #define TEXT_CUBEMAP	1
+#define TEXT_FB_DEPTH	2
 
 typedef struct texture_t
 {
+	GLuint fbID;
 	GLuint texID;
 	GLuint textType;
 	int w;
@@ -23,4 +25,6 @@ typedef struct texture_t
 
 void createCubeMapTexture(texture_t* newTex);
 void createTexture(texture_t* texturePath);
+
+bool createTextureFrameBuffer(texture_t* fbTex);
 
