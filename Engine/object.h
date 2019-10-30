@@ -22,8 +22,9 @@ typedef struct object_t
 
 }object_t;
 
-object_t* createObject(const char* mshFile, GLuint programID);
+object_t* createObject(const char* mshFile, GLuint programID, texture_t* fbTex);
 void uploadMesh(mesh_t* pol, GLuint programID);
 void updateObject(object_t* obj);
 void drawObject(object_t* obj, camera_t cam, GLuint programID, light_t* light);
+void drawObjectShadowMap(object_t* obj, GLuint programID, light_t* light);
 void moveObj(object_t* obj);

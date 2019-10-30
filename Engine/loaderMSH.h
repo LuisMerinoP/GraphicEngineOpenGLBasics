@@ -72,11 +72,14 @@ typedef struct mesh_t
 
 	texture_t* texture;
 	texture_t* normalTexture;
+	texture_t* fbTex;
 
 	float shininess;
 	int useNormalTex;
 	int useDepthWrite;
 	int useAlpha;
+
+	int useShadowMap;
 
 }mesh_t;
 

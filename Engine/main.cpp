@@ -319,19 +319,21 @@ int main(int argc, char** argv)
 
 
 	GLint programID = compileAndLinkShaderProgram(vertexShaderSRC, fragmentShaderSRC);
+	GLint programIDShadowMap = compileAndLinkShaderProgram(vertexShaderShadowMapSRC, fragmentShaderShadowMapSRC);
+
 	//create frameBuffer texture
 	texture_t* fbTex = new texture_t;
 	memset(fbTex, 0, sizeof(texture_t));
 	createTextureFrameBuffer(fbTex);
 
-	//object_t* sky = createObject("data/skybox.msh.xml", programID);//createPolygon();
+	//object_t* sky = createObject("data/skybox.msh.xml", programID, NULL);//createPolygon();
 	//sky->scaling = glm::vec3(10, 10, 10);
-	object_t* obj = createObject("data/scene.msh.xml", programID);//createPolygon();
+	object_t* obj = createObject("data/scene.msh.xml", programID, fbTex);//createPolygon();
 	//object_t* obj = createBillboard("data/smoke.png", programID);
 	
 	/*emitter_t* emi1 = createEmitter("data/smoke.png", programID, 2, 5, 0.1, 0.3, glm::vec3(-0.2, 0.5, -0.5), glm::vec3(0.2, 5.5, 0.5),
 		glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), glm::vec3(0, 0, 0), 2);
-
+	
 	
 	object_t* obj2 = createBillboard("data/top.png", programID);
 	obj2->position = glm::vec3(0.0f, -1.0f, 0.0f);*/
@@ -342,6 +344,7 @@ int main(int argc, char** argv)
 
 	while (!(glfwWindowShouldClose(win1)))
 	{
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		updateCamera(&cam, &lastX, &lastY, win1);
 
@@ -351,9 +354,11 @@ int main(int argc, char** argv)
 
 		//drawEmitter(emi1, &cam, programID, light);
 		//drawObject(obj, cam, programID, light);
-
-		//updateObject(sky);
 		updateObject(obj);
+		drawObjectShadowMap(obj, programIDShadowMap, light);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		//updateObject(sky);
+		
 		//drawObject(sky, cam, programID, light);
 		drawObject(obj, cam, programID, light);
 

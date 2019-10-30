@@ -10,4 +10,7 @@
 //Lo hacemos asi de manera provisional. Luego habrá que encapsular esto dentro de la clase shader
 extern const GLchar* vertexShaderSRC;
 extern const GLchar* fragmentShaderSRC;
+extern const GLchar* vertexShaderShadowMapSRC;
+extern const GLchar* fragmentShaderShadowMapSRC;
+
 GLint compileAndLinkShaderProgram(const GLchar* vShaderSrc, const GLchar* fShaderSrc);
